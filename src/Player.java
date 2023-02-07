@@ -1,81 +1,95 @@
 public class Player {
-    enum skillType {batsman, bowler, all_rounder}
-
-    ;
     private String name;
-    private skillType skill;
-    private int totalRunsScored;
+    private int runs;
     private int totalWicketsTaken;
+    private int totalFours;
+    private int totalSixes;
+
+    private int skillLevel;
+
+    public int getSkillLevel() {
+        return skillLevel;
+    }
+
+    public void setSkillLevel(int skillLevel) {
+        this.skillLevel = skillLevel;
+    }
+
+    public int getTotalFours() {
+        return totalFours;
+    }
+
+    public void setTotalFours(int totalFours) {
+        this.totalFours = totalFours;
+    }
+
+    public int getTotalSixes() {
+        return totalSixes;
+    }
+
+    public void setTotalSixes(int totalSixes) {
+        this.totalSixes = totalSixes;
+    }
 
     public Player() {
-        this.skill = skillType.batsman;
     }
 
-    private Player(Builder playerBuilder) {
-        this.name = playerBuilder.name;
-        this.skill = playerBuilder.skill;
-        this.totalRunsScored = playerBuilder.totalRunsScored;
-        this.totalWicketsTaken = playerBuilder.totalWicketsTaken;
-    }
 
     public String getName() {
         return name;
     }
 
-    public skillType getSkill() {
-        return skill;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getTotalRunsScored() {
-        return totalRunsScored;
+    public int getRuns() {
+        return runs;
+    }
+
+    public void setRuns(int runs) {
+        this.runs = runs;
     }
 
     public int getTotalWicketsTaken() {
         return totalWicketsTaken;
     }
 
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", skill=" + skill +
-                ", totalRuns=" + totalRunsScored +
-                ", totalWickets=" + totalWicketsTaken +
-                '}';
+    public void setTotalWicketsTaken(int totalWicketsTaken) {
+        this.totalWicketsTaken = totalWicketsTaken;
     }
 
-    public static class Builder {
-
-        private String name;
-        private Player.skillType skill;
-        private int totalRunsScored;
-        private int totalWicketsTaken;
-
-        public Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder setSkill(Player.skillType skill) {
-            this.skill = skill;
-            return this;
-        }
-
-        public Builder setTotalRunsScored(int totalRunsScored) {
-            this.totalRunsScored = totalRunsScored;
-            return this;
-        }
-
-        public Builder setTotalWicketsTaken(int totalWicketsTaken) {
-            this.totalWicketsTaken = totalWicketsTaken;
-            return this;
-        }
-
-        public Player build() {
-            return new Player(this);
-        }
-
-    }
+    //    private Player(Builder playerBuilder) {
+//        this.name = playerBuilder.name;
+//        this.runs = playerBuilder.totalRunsScored;
+//        this.totalWicketsTaken = playerBuilder.totalWicketsTaken;
+//    }
+//    public static class Builder {
+//
+//        private String name;
+//        private int totalRunsScored;
+//        private int totalWicketsTaken;
+//
+//        public Builder setName(String name) {
+//            this.name = name;
+//            return this;
+//        }
+//
+//
+//        public Builder setTotalRunsScored(int totalRunsScored) {
+//            this.totalRunsScored = totalRunsScored;
+//            return this;
+//        }
+//
+//        public Builder setTotalWicketsTaken(int totalWicketsTaken) {
+//            this.totalWicketsTaken = totalWicketsTaken;
+//            return this;
+//        }
+//
+//        public Player build() {
+//            return new Player(this);
+//        }
+//
+//    }
 
 }

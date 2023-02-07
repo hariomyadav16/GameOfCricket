@@ -35,10 +35,6 @@ public class TesterClass {
         game.showScorecard(game.getTeam1());
         game.showScorecard(game.getTeam2());
 
-//        if (game.result().equals("Draw"))
-//            printToConsole("The match is drawn!\n");
-//        else
-//            printToConsole("Team " + game.result() + " won the match!\n");
         game.gameResult();
 
 
@@ -49,22 +45,17 @@ public class TesterClass {
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             return input.readLine();
         } catch (IOException exception) {
-            System.out.println("Please enter valid value!");
+            Utils.printToConsole("Please enter valid value!");
             takeInput();
         }
         return "";
     }
 
-//    public static void Utils.printToConsole(String text) {
-//        System.out.print(text);
-//    }
-
-
     public static int convertToInt(String text) throws IOException {
         try {
             return Integer.parseInt(text);
         } catch (NumberFormatException exception) {
-            System.out.println("Please enter an Integer value, Try Again!");
+            Utils.printToConsole("Please enter an Integer value, Try Again!");
             return convertToInt(takeInput());
         }
 
@@ -89,32 +80,27 @@ public class TesterClass {
     public static Team createTeam(int noOfPlayers, int index) throws IOException {
         Utils.printToConsole("Enter name of team " + index + ": ");
         String teamName = takeInput();
-        Player[] playersOfTeam1 = new Player[noOfPlayers];
+        Player[] playersOfTeam = new Player[noOfPlayers];
         ArrayList<Player> batsmanArrayList = new ArrayList<>();
         ArrayList<Player> bowlerArrayList = new ArrayList<>();
         for (int i = 0; i < noOfPlayers; i++) {
             Utils.printToConsole("Enter name of Player " + (i + 1) + ": ");
             String playerName = takeInput();
             if (knowPlayerSkill() == 1) {
-                playersOfTeam1[i] = new Batsman(playerName);
+                playersOfTeam[i] = new Batsman(playerName);
                 batsmanArrayList.add(new Batsman(playerName));
 
-                // batsmanArrayList.get(i).setName("P" + (i+1));
-                // playersOfTeam1[i].setName("P" + (i+1));
             } else {
-                playersOfTeam1[i] = new Bowler(playerName);
+                playersOfTeam[i] = new Bowler(playerName);
 
                 bowlerArrayList.add(new Bowler(playerName));
-//                playersOfTeam1[i] = new Bowler();
-//                playersOfTeam1[i].setName("P" + (i+1));
 
             }
-            // playersOfTeam1[i] = new Player.Builder().setName("P" + (i + 1)).build();
         }
         return new Team.Builder()
                 .setName(teamName)
                 .setNoOfPlayers(noOfPlayers)
-                .setPlayers(playersOfTeam1)
+                .setPlayers(playersOfTeam)
                 .setBatsmanArrayList(batsmanArrayList)
                 .setBowlerArrayList(bowlerArrayList)
                 .setNoOfBatsman(batsmanArrayList.size())

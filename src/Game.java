@@ -80,17 +80,28 @@ public class Game {
     }
 
     public int bowl() {
-        return generateRandomNumber() % 8;
+        int randomNum = generateRandomNumber();
+        if ((randomNum <= 60)) {
+            return randomNum % 7;
+        } else {
+            return 7;
+        }
     }
 
+    public int generateRun(int num) {
+        if (generateRandomNumber() <= (num * 10)) return generateRandomNumber() % 7;
+        else {
+            return 7;
+        }
+    }
 
     public int generateRandomNumber() {
-        int randomNumber = (int) (Math.random() * 10);
+        int randomNumber = (int) (Math.random() * 100);
         return randomNumber;
     }
 
     public void startFirstInning() {
-        this.team1 = simulateBalling(false);
+        this.team1 = simulateBowling(false);
     }
 
     public void changeInnings() {
@@ -100,10 +111,10 @@ public class Game {
     }
 
     public void startSecondInning() {
-        this.team2 = simulateBalling(true);
+        this.team2 = simulateBowling(true);
     }
 
-    public Team simulateBalling(Boolean isSecondInning) {
+    public Team simulateBowling(Boolean isSecondInning) {
         int currBatsmanIndex = 0;
         int currBowlerIndex = 0;
         int currRun = 0;
@@ -112,7 +123,7 @@ public class Game {
             int currWicket = battingTeam.getNoOfWicketFell();
             if (res == 7) {
                 currWicket++;
-                int bowlingTeamBatsmanIndex = bowlingTeam.getNoOfPlayers() - (bowlingTeam.getNoOfPlayers() - currBowlerIndex);
+                int bowlingTeamBatsmanIndex = bowlingTeam.getNoOfBatsman() - (bowlingTeam.getNoOfPlayers() - currBowlerIndex);
                 if (currBowlerIndex < bowlingTeam.getNoOfBowler()) {
                     onWicket(currBowlerIndex, true);
                 } else if (bowlingTeamBatsmanIndex < bowlingTeam.getNoOfBatsman()) {
@@ -140,7 +151,6 @@ public class Game {
                     currBowlerIndex++;
 
             }
-            // should update team1 object after every ball or  at last
             try {
                 sleep(600);
             } catch (InterruptedException except) {
@@ -176,8 +186,9 @@ public class Game {
     }
 
 
-    public void updateBatsmanStats(ArrayList<Player> list, int currIndex, int run) { //TODO: ADD RUN TO BOWLER STATS TOO, ECONOMY
+    public void updateBatsmanStats(ArrayList<Player> list, int currIndex, int run) {
         Player currPlayer = list.get(currIndex);
+        int resOnBowl = generateRun(currPlayer.getSkillLevel());
         list.get(currIndex).setRuns(currPlayer.getRuns() + run);
         if (run == 4) {
             list.get(currIndex).setTotalFours(currPlayer.getTotalFours() + 1);
@@ -187,20 +198,11 @@ public class Game {
 
     }
 
-    public void updateBowlerStats(ArrayList<Player> list, int currIndex)  // TODO: ADD NO OF OVERS THROWN
+    public void updateBowlerStats(ArrayList<Player> list, int currIndex)
     {
         Player currPlayer = list.get(currIndex);
         list.get(currIndex).setTotalWicketsTaken(currPlayer.getTotalWicketsTaken() + 1);
     }
-
-//    public String result() {
-//        if (team1.getScore() > team2.getScore()) {
-//            return team1.getName();
-//        } else if (team1.getScore() < team2.getScore()) {
-//            return team2.getName();
-//        }
-//        return "Draw";
-//    }
 
     public void gameResult() {
         int wicketDiff = 0, runDiff;
@@ -220,28 +222,28 @@ public class Game {
     public void printWinningMsg(int wicketDiff, int runDiff, boolean isSecondInningPlayingTeamWon) {
         if (isSecondInningPlayingTeamWon) {
             if (wicketDiff == 0) {
-                wonByRunText(runDiff);
+                wonByRunText(runDiff, battingTeam.getName());
             } else {
-                wonByWicketText(wicketDiff);
+                wonByWicketText(wicketDiff, battingTeam.getName());
             }
         } else {
-            wonByRunText(runDiff);
+            wonByRunText(runDiff, bowlingTeam.getName());
         }
     }
 
-    public void wonByWicketText(int wicketDiff) {
+    public void wonByWicketText(int wicketDiff, String teamName) {
         if (wicketDiff == 1) {
-            Utils.printToConsole("Team " + battingTeam.getName() + " won the match by " + wicketDiff + " wicket!\n");
+            Utils.printToConsole("Team " + teamName + " won the match by " + wicketDiff + " wicket!\n");
         } else {
-            Utils.printToConsole("Team " + battingTeam.getName() + " won the match by " + wicketDiff + " wickets!\n");
+            Utils.printToConsole("Team " + teamName + " won the match by " + wicketDiff + " wickets!\n");
         }
     }
 
-    public void wonByRunText(int runDiff) {
+    public void wonByRunText(int runDiff, String teamName) {
         if (runDiff == 1) {
-            Utils.printToConsole("Team " + battingTeam.getName() + " won the match by " + runDiff + " run!\n");
+            Utils.printToConsole("Team " + teamName + " won the match by " + runDiff + " run!\n");
         } else {
-            Utils.printToConsole("Team " + battingTeam.getName() + " won the match by " + runDiff + " runs!\n");
+            Utils.printToConsole("Team " + teamName + " won the match by " + runDiff + " runs!\n");
         }
     }
 
